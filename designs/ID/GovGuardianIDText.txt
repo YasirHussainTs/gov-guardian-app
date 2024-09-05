@@ -1,0 +1,39 @@
+@startuml
+actor User
+actor CommunityUser
+actor GovernmentOffice
+actor GovernmentVigilance
+
+participant "User Interface" as UserInterface
+participant "Community User Interface" as CommunityUserInterface
+participant "Government Office Interface" as GovOfficeInterface
+participant "Government Vigilance Interface" as VigilanceInterface
+participant "Application Backend" as Backend
+database "Database" as Database
+
+User -> UserInterface: Interacts
+CommunityUser -> CommunityUserInterface: Interacts
+GovernmentOffice -> GovOfficeInterface: Interacts
+GovernmentVigilance -> VigilanceInterface: Interacts
+
+UserInterface -> Backend: Submit Report/Review, Check Status, Social Chat, Respond With Community, Check Profile
+CommunityUserInterface -> Backend: Submit Report/Review, Check Complaints, Check Rewards/Reviews, Check Status, Respond With User, Check Profile
+GovOfficeInterface -> Backend: Check Rewards/Reviews, Check Complaints, Check Status, Respond With User, Check Profile
+VigilanceInterface -> Backend: Check Status, Respond With CommunityMember, Take Action, Check Complaints, Check Status, Check Profile
+
+Backend -> Database: Query/Update Data
+Database --> Backend: Return Data
+
+Backend -> Backend: Process Data
+
+Backend --> UserInterface: Send Response
+Backend --> CommunityUserInterface: Send Response
+Backend --> GovOfficeInterface: Send Response
+Backend --> VigilanceInterface: Send Response
+
+UserInterface --> User: Display Response
+CommunityUserInterface --> CommunityUser: Display Response
+GovOfficeInterface --> GovernmentOffice: Display Response
+VigilanceInterface --> GovernmentVigilance: Display Response
+@enduml
+

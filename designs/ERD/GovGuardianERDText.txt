@@ -1,0 +1,167 @@
+@startuml
+
+package "Entities" {
+    class AppUser {
+        username: String
+        password: String
+        email: String
+        address: String
+        phone: String
+        gender: String
+        description: String
+        latitude: Double
+        longitude: Double
+    }
+
+    class UserReview {
+        content: String
+        rating: Integer
+        feedback: String
+        timestamp: ZonedDateTime
+    }
+
+    class UserReward {
+        description: String
+        points: Integer
+        timestamp: ZonedDateTime
+    }
+
+    class UserReportContent {
+        description: String
+        timestamp: ZonedDateTime
+        status: String
+        text: String
+        image: Blob
+        video: Blob
+        voiceData: Blob
+    }
+
+    class CommunityMember {
+        username: String
+        password: String
+        email: String
+        address: String
+        phone: String
+        designation: String
+        description: String
+        latitude: Double
+        longitude: Double
+    }
+
+    class CommunityComplaintsContent {
+        description: String
+        timestamp: ZonedDateTime
+        status: String
+        text: String
+        image: Blob
+        video: Blob
+        voiceData: Blob
+    }
+
+    class CommunityReview {
+        content: String
+        rating: Integer
+        feedback: String
+        timestamp: ZonedDateTime
+    }
+
+    class CommunityReward {
+        description: String
+        points: Integer
+        timestamp: ZonedDateTime
+    }
+
+    class GovOffice {
+        officerName: String
+        password: String
+        email: String
+        department: String
+        phone: String
+        description: String
+        latitude: Double
+        longitude: Double
+    }
+
+    class GovOfficeComplaintsContent {
+        description: String
+        timestamp: ZonedDateTime
+        status: String
+        text: String
+        image: Blob
+        video: Blob
+        voiceData: Blob
+    }
+
+    class GovOfficeReview {
+        content: String
+        rating: Integer
+        feedback: String
+        timestamp: ZonedDateTime
+    }
+
+    class GovOfficeReward {
+        description: String
+        points: Integer
+        timestamp: ZonedDateTime
+    }
+
+    class GovVigilance {
+        officerName: String
+        password: String
+        email: String
+        department: String
+        phone: String
+        description: String
+        latitude: Double
+        longitude: Double
+    }
+
+    class GovVigilanceComplaintsContent {
+        description: String
+        timestamp: ZonedDateTime
+        status: String
+        text: String
+        image: Blob
+        video: Blob
+        voiceData: Blob
+    }
+
+    class GovVigilanceLaw {
+        name: String
+        description: String
+    }
+
+    class GovVigilanceAction {
+        action: String
+        date: ZonedDateTime
+    }
+
+    class ChatbotInquiry {
+        ChatbotInquiry: String
+    }
+
+    class ChatbotResponse {
+        ChatbotResponse: String
+    }
+}
+
+AppUser "1" --o "0..*" UserReview: userReview
+AppUser "1" --o "0..*" UserReward: userReward
+AppUser "1" --o "0..*" UserReportContent: userReportContent
+
+CommunityMember "1" --o "0..*" CommunityComplaintsContent: communityComplaintsContent
+CommunityMember "1" --o "0..*" CommunityReview: communityReview
+CommunityMember "1" --o "0..*" CommunityReward: communityReward
+
+GovOffice "1" --o "0..*" GovOfficeComplaintsContent: govOfficeComplaintsContent
+GovOffice "1" --o "0..*" GovOfficeReview: govOfficeReview
+GovOffice "1" --o "0..*" GovOfficeReward: govOfficeReward
+
+GovVigilance "1" --o "0..*" GovVigilanceComplaintsContent: govVigilanceComplaintsContent
+GovVigilance "1" --o "0..*" GovVigilanceLaw: govVigilanceLaw
+GovVigilance "1" --o "0..*" GovVigilanceAction: govVigilanceAction
+
+ChatbotInquiry "1" -- "0..1" ChatbotResponse: chatbotResponse
+
+@enduml
+

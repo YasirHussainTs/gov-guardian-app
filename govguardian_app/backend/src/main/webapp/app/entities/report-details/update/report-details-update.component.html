@@ -1,0 +1,342 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-report-details-heading"
+        data-cy="ReportDetailsCreateUpdateHeading"
+        jhiTranslate="govGuardianApp.reportDetails.home.createOrEditLabel"
+      >
+        Create or edit a Report Details
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.owner" for="field_owner">Owner</label>
+          <input type="text" class="form-control" name="owner" id="field_owner" data-cy="owner" formControlName="owner" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.responder" for="field_responder">Responder</label>
+          <input type="text" class="form-control" name="responder" id="field_responder" data-cy="responder" formControlName="responder" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.timestamp" for="field_timestamp">Timestamp</label>
+          <div class="d-flex">
+            <input
+              id="field_timestamp"
+              data-cy="timestamp"
+              type="datetime-local"
+              class="form-control"
+              name="timestamp"
+              formControlName="timestamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.status" for="field_status">Status</label>
+          <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.image" for="field_image">Image</label>
+          <div>
+            @if (editForm.get('image')!.value) {
+              <img
+                [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                style="max-height: 100px"
+                alt="reportDetails image"
+              />
+            }
+            @if (editForm.get('image')!.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_image"
+              data-cy="image"
+              (change)="setFileData($event, 'image', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.video" for="field_video">Video</label>
+          <div>
+            @if (editForm.get('video')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('video')!.value!, editForm.get('videoContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start">{{ editForm.get('videoContentType')!.value }}, {{ byteSize(editForm.get('video')!.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ video: undefined, videoContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_video"
+              data-cy="video"
+              (change)="setFileData($event, 'video', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="video" id="field_video" data-cy="video" formControlName="video" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="videoContentType"
+            id="field_videoContentType"
+            formControlName="videoContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.voiceData" for="field_voiceData">Voice Data</label>
+          <div>
+            @if (editForm.get('voiceData')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('voiceData')!.value!, editForm.get('voiceDataContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start"
+                  >{{ editForm.get('voiceDataContentType')!.value }}, {{ byteSize(editForm.get('voiceData')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ voiceData: undefined, voiceDataContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_voiceData"
+              data-cy="voiceData"
+              (change)="setFileData($event, 'voiceData', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="voiceData" id="field_voiceData" data-cy="voiceData" formControlName="voiceData" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="voiceDataContentType"
+            id="field_voiceDataContentType"
+            formControlName="voiceDataContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.file1" for="field_file1">File 1</label>
+          <div>
+            @if (editForm.get('file1')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('file1')!.value!, editForm.get('file1ContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start">{{ editForm.get('file1ContentType')!.value }}, {{ byteSize(editForm.get('file1')!.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ file1: undefined, file1ContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_file1"
+              data-cy="file1"
+              (change)="setFileData($event, 'file1', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="file1" id="field_file1" data-cy="file1" formControlName="file1" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="file1ContentType"
+            id="field_file1ContentType"
+            formControlName="file1ContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.file2" for="field_file2">File 2</label>
+          <div>
+            @if (editForm.get('file2')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('file2')!.value!, editForm.get('file2ContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start">{{ editForm.get('file2ContentType')!.value }}, {{ byteSize(editForm.get('file2')!.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ file2: undefined, file2ContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_file2"
+              data-cy="file2"
+              (change)="setFileData($event, 'file2', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="file2" id="field_file2" data-cy="file2" formControlName="file2" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="file2ContentType"
+            id="field_file2ContentType"
+            formControlName="file2ContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.file3" for="field_file3">File 3</label>
+          <div>
+            @if (editForm.get('file3')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('file3')!.value!, editForm.get('file3ContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start">{{ editForm.get('file3ContentType')!.value }}, {{ byteSize(editForm.get('file3')!.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ file3: undefined, file3ContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_file3"
+              data-cy="file3"
+              (change)="setFileData($event, 'file3', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="file3" id="field_file3" data-cy="file3" formControlName="file3" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="file3ContentType"
+            id="field_file3ContentType"
+            formControlName="file3ContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.reportDetails.appUser" for="field_appUser">App User</label>
+          <select
+            class="form-control"
+            id="field_appUser"
+            data-cy="appUser"
+            name="appUser"
+            formControlName="appUser"
+            [compareWith]="compareAppUser"
+          >
+            <option [ngValue]="null"></option>
+            @for (appUserOption of appUsersSharedCollection; track $index) {
+              <option [ngValue]="appUserOption">{{ appUserOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

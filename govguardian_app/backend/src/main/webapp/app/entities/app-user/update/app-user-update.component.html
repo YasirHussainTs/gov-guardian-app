@@ -1,0 +1,172 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-app-user-heading" data-cy="AppUserCreateUpdateHeading" jhiTranslate="govGuardianApp.appUser.home.createOrEditLabel">
+        Create or edit a App User
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.address" for="field_address">Address</label>
+          <input type="text" class="form-control" name="address" id="field_address" data-cy="address" formControlName="address" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.phone" for="field_phone">Phone</label>
+          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
+          @if (editForm.get('phone')!.invalid && (editForm.get('phone')!.dirty || editForm.get('phone')!.touched)) {
+            <div>
+              @if (editForm.get('phone')?.errors?.pattern) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Phone' }"
+                  >This field should follow pattern for Phone.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.gender" for="field_gender">Gender</label>
+          <input type="text" class="form-control" name="gender" id="field_gender" data-cy="gender" formControlName="gender" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.department" for="field_department">Department</label>
+          <input
+            type="text"
+            class="form-control"
+            name="department"
+            id="field_department"
+            data-cy="department"
+            formControlName="department"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.latitude" for="field_latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.longitude" for="field_longitude">Longitude</label>
+          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.userType" for="field_userType">User Type</label>
+          <select class="form-control" name="userType" formControlName="userType" id="field_userType" data-cy="userType">
+            <option [ngValue]="null">{{ 'govGuardianApp.UserType.null' | translate }}</option>
+            @for (userType of userTypeValues; track $index) {
+              <option [value]="userType">{{ 'govGuardianApp.UserType.' + userType | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.reviews" for="field_reviews">Reviews</label>
+          <select
+            class="form-control"
+            id="field_reviews"
+            data-cy="reviews"
+            name="reviews"
+            formControlName="reviews"
+            [compareWith]="compareReview"
+          >
+            <option [ngValue]="null"></option>
+            @for (reviewOption of reviewsSharedCollection; track $index) {
+              <option [ngValue]="reviewOption">{{ reviewOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.rewards" for="field_rewards">Rewards</label>
+          <select
+            class="form-control"
+            id="field_rewards"
+            data-cy="rewards"
+            name="rewards"
+            formControlName="rewards"
+            [compareWith]="compareReward"
+          >
+            <option [ngValue]="null"></option>
+            @for (rewardOption of rewardsSharedCollection; track $index) {
+              <option [ngValue]="rewardOption">{{ rewardOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="govGuardianApp.appUser.govOfficialContent" for="field_govOfficialContent"
+            >Gov Official Content</label
+          >
+          <select
+            class="form-control"
+            id="field_govOfficialContent"
+            data-cy="govOfficialContent"
+            name="govOfficialContent"
+            formControlName="govOfficialContent"
+            [compareWith]="compareGovOfficialContent"
+          >
+            <option [ngValue]="null"></option>
+            @for (govOfficialContentOption of govOfficialContentsSharedCollection; track $index) {
+              <option [ngValue]="govOfficialContentOption">{{ govOfficialContentOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

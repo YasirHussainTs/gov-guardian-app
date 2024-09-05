@@ -1,0 +1,36 @@
+{
+  "govGuardianApp": {
+    "reportDetails": {
+      "home": {
+        "title": "Report Details",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Report Details",
+        "createOrEditLabel": "Create or edit a Report Details",
+        "notFound": "No Report Details found"
+      },
+      "created": "A new Report Details is created with identifier {{ param }}",
+      "updated": "A Report Details is updated with identifier {{ param }}",
+      "deleted": "A Report Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Report Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Report Details"
+      },
+      "id": "ID",
+      "owner": "Owner",
+      "responder": "Responder",
+      "description": "Description",
+      "title": "Title",
+      "timestamp": "Timestamp",
+      "status": "Status",
+      "image": "Image",
+      "video": "Video",
+      "voiceData": "Voice Data",
+      "file1": "File 1",
+      "file2": "File 2",
+      "file3": "File 3",
+      "appUser": "App User"
+    }
+  }
+}

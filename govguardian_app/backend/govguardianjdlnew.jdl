@@ -1,0 +1,81 @@
+enum UserType {
+  USER
+  COMMUNITY_MEMBER
+  GOV_OFFICIAL
+}
+
+entity AppUser {
+  email       String ,
+  address     String ,
+  phone       String pattern(/^[0-9]{10}$/), 
+  gender      String ,
+  department  String,
+  description String,
+  latitude    Double,
+  longitude   Double,
+  userType    UserType
+}
+
+entity Review {
+  content   String,
+  rating    Integer,
+  feedback  String,
+  timestamp ZonedDateTime
+}
+
+entity Reward {
+  description   String,
+  points        Integer,
+  timestamp     ZonedDateTime
+}
+
+entity ReportHeader {
+  id            String
+  description   String,
+  title         String,
+  timestamp     ZonedDateTime,
+  status        String  
+}
+
+entity ReportDetails {
+  owner         String,
+  responder     String,
+  description   String,
+  title         String,
+  timestamp     ZonedDateTime,
+  status        String,
+  image         ImageBlob,
+  video         Blob,
+  voiceData     Blob,  
+  file1         Blob,
+  file2         Blob,
+  file3         Blob
+}
+
+entity GovOfficialContent {
+  law              String,
+  description       String,
+  action            String,
+  date              ZonedDateTime
+}
+
+// Relationships
+relationship OneToMany { 
+  AppUser  {reportHeader}   to  ReportHeader  {appUser}
+  AppUser  {reportDetails}   to  ReportDetails  {appUser}
+
+  Review {appUser} to AppUser {reviews}
+  Reward {appUser} to AppUser {rewards}  
+
+  GovOfficialContent  {appUser}  to  AppUser  {govOfficialContent}  
+}
+
+relationship OneToOne { 
+  AppUser                       {user}              to    User with builtInEntity
+}
+
+dto * with mapstruct
+service all with serviceClass
+service all with serviceImpl
+paginate * with pagination
+filter*

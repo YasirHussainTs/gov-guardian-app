@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240506092754"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "gov_official_content",
+  "fields": [
+    {
+      "fieldName": "law",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "action",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "GovOfficialContent",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "appUser",
+      "otherEntityRelationshipName": "govOfficialContent",
+      "relationshipName": "appUser",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

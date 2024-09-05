@@ -1,0 +1,124 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (reportDetails) {
+      <div>
+        <h2 data-cy="reportDetailsDetailsHeading"><span jhiTranslate="govGuardianApp.reportDetails.detail.title">Report Details</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ reportDetails.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.owner">Owner</span></dt>
+          <dd>
+            <span>{{ reportDetails.owner }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.responder">Responder</span></dt>
+          <dd>
+            <span>{{ reportDetails.responder }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.description">Description</span></dt>
+          <dd>
+            <span>{{ reportDetails.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.title">Title</span></dt>
+          <dd>
+            <span>{{ reportDetails.title }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.timestamp">Timestamp</span></dt>
+          <dd>
+            <span>{{ reportDetails.timestamp | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.status">Status</span></dt>
+          <dd>
+            <span>{{ reportDetails.status }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.image">Image</span></dt>
+          <dd>
+            @if (reportDetails.image) {
+              <div>
+                <a (click)="openFile(reportDetails.image, reportDetails.imageContentType)">
+                  <img
+                    [src]="'data:' + reportDetails.imageContentType + ';base64,' + reportDetails.image"
+                    style="max-width: 100%"
+                    alt="reportDetails image"
+                  />
+                </a>
+                {{ reportDetails.imageContentType }}, {{ byteSize(reportDetails.image) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.video">Video</span></dt>
+          <dd>
+            @if (reportDetails.video) {
+              <div>
+                <a (click)="openFile(reportDetails.video, reportDetails.videoContentType)" jhiTranslate="entity.action.open">Open</a>
+                {{ reportDetails.videoContentType }}, {{ byteSize(reportDetails.video) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.voiceData">Voice Data</span></dt>
+          <dd>
+            @if (reportDetails.voiceData) {
+              <div>
+                <a (click)="openFile(reportDetails.voiceData, reportDetails.voiceDataContentType)" jhiTranslate="entity.action.open"
+                  >Open</a
+                >
+                {{ reportDetails.voiceDataContentType }}, {{ byteSize(reportDetails.voiceData) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.file1">File 1</span></dt>
+          <dd>
+            @if (reportDetails.file1) {
+              <div>
+                <a (click)="openFile(reportDetails.file1, reportDetails.file1ContentType)" jhiTranslate="entity.action.open">Open</a>
+                {{ reportDetails.file1ContentType }}, {{ byteSize(reportDetails.file1) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.file2">File 2</span></dt>
+          <dd>
+            @if (reportDetails.file2) {
+              <div>
+                <a (click)="openFile(reportDetails.file2, reportDetails.file2ContentType)" jhiTranslate="entity.action.open">Open</a>
+                {{ reportDetails.file2ContentType }}, {{ byteSize(reportDetails.file2) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.file3">File 3</span></dt>
+          <dd>
+            @if (reportDetails.file3) {
+              <div>
+                <a (click)="openFile(reportDetails.file3, reportDetails.file3ContentType)" jhiTranslate="entity.action.open">Open</a>
+                {{ reportDetails.file3ContentType }}, {{ byteSize(reportDetails.file3) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.reportDetails.appUser">App User</span></dt>
+          <dd>
+            @if (reportDetails.appUser) {
+              <div>
+                <a [routerLink]="['/app-user', reportDetails.appUser.id, 'view']">{{ reportDetails.appUser.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/report-details', reportDetails.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

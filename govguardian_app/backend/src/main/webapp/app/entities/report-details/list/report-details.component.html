@@ -1,0 +1,246 @@
+<div>
+  <h2 id="page-heading" data-cy="ReportDetailsHeading">
+    <span jhiTranslate="govGuardianApp.reportDetails.home.title">Report Details</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="govGuardianApp.reportDetails.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-report-details"
+        [routerLink]="['/report-details/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="govGuardianApp.reportDetails.home.createLabel">Create a new Report Details</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  @if (reportDetails?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="govGuardianApp.reportDetails.home.notFound">No Report Details found</span>
+    </div>
+  }
+
+  @if (reportDetails && reportDetails.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="owner">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.owner">Owner</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="responder">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.responder">Responder</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="title">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.title">Title</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="timestamp">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.timestamp">Timestamp</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="image">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.image">Image</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="video">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.video">Video</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="voiceData">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.voiceData">Voice Data</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="file1">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.file1">File 1</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="file2">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.file2">File 2</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="file3">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.file3">File 3</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="appUser.id">
+              <div class="d-flex">
+                <span jhiTranslate="govGuardianApp.reportDetails.appUser">App User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (reportDetails of reportDetails; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/report-details', reportDetails.id, 'view']">{{ reportDetails.id }}</a>
+              </td>
+              <td>{{ reportDetails.owner }}</td>
+              <td>{{ reportDetails.responder }}</td>
+              <td>{{ reportDetails.description }}</td>
+              <td>{{ reportDetails.title }}</td>
+              <td>{{ reportDetails.timestamp | formatMediumDatetime }}</td>
+              <td>{{ reportDetails.status }}</td>
+              <td>
+                @if (reportDetails.image) {
+                  <a (click)="openFile(reportDetails.image, reportDetails.imageContentType)">
+                    <img
+                      [src]="'data:' + reportDetails.imageContentType + ';base64,' + reportDetails.image"
+                      style="max-height: 30px"
+                      alt="reportDetails image"
+                    />
+                  </a>
+                  <span>{{ reportDetails.imageContentType }}, {{ byteSize(reportDetails.image) }}</span>
+                }
+              </td>
+              <td>
+                @if (reportDetails.video) {
+                  <a (click)="openFile(reportDetails.video, reportDetails.videoContentType)" jhiTranslate="entity.action.open">Open</a>
+                  <span>{{ reportDetails.videoContentType }}, {{ byteSize(reportDetails.video) }}</span>
+                }
+              </td>
+              <td>
+                @if (reportDetails.voiceData) {
+                  <a (click)="openFile(reportDetails.voiceData, reportDetails.voiceDataContentType)" jhiTranslate="entity.action.open"
+                    >Open</a
+                  >
+                  <span>{{ reportDetails.voiceDataContentType }}, {{ byteSize(reportDetails.voiceData) }}</span>
+                }
+              </td>
+              <td>
+                @if (reportDetails.file1) {
+                  <a (click)="openFile(reportDetails.file1, reportDetails.file1ContentType)" jhiTranslate="entity.action.open">Open</a>
+                  <span>{{ reportDetails.file1ContentType }}, {{ byteSize(reportDetails.file1) }}</span>
+                }
+              </td>
+              <td>
+                @if (reportDetails.file2) {
+                  <a (click)="openFile(reportDetails.file2, reportDetails.file2ContentType)" jhiTranslate="entity.action.open">Open</a>
+                  <span>{{ reportDetails.file2ContentType }}, {{ byteSize(reportDetails.file2) }}</span>
+                }
+              </td>
+              <td>
+                @if (reportDetails.file3) {
+                  <a (click)="openFile(reportDetails.file3, reportDetails.file3ContentType)" jhiTranslate="entity.action.open">Open</a>
+                  <span>{{ reportDetails.file3ContentType }}, {{ byteSize(reportDetails.file3) }}</span>
+                }
+              </td>
+              <td>
+                @if (reportDetails.appUser) {
+                  <div>
+                    <a [routerLink]="['/app-user', reportDetails.appUser.id, 'view']">{{ reportDetails.appUser.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/report-details', reportDetails.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/report-details', reportDetails.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(reportDetails)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (reportDetails && reportDetails.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

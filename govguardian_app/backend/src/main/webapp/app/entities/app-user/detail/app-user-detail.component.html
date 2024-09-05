@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (appUser) {
+      <div>
+        <h2 data-cy="appUserDetailsHeading"><span jhiTranslate="govGuardianApp.appUser.detail.title">App User</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ appUser.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.email">Email</span></dt>
+          <dd>
+            <span>{{ appUser.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.address">Address</span></dt>
+          <dd>
+            <span>{{ appUser.address }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.phone">Phone</span></dt>
+          <dd>
+            <span>{{ appUser.phone }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.gender">Gender</span></dt>
+          <dd>
+            <span>{{ appUser.gender }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.department">Department</span></dt>
+          <dd>
+            <span>{{ appUser.department }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.description">Description</span></dt>
+          <dd>
+            <span>{{ appUser.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.latitude">Latitude</span></dt>
+          <dd>
+            <span>{{ appUser.latitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.longitude">Longitude</span></dt>
+          <dd>
+            <span>{{ appUser.longitude }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.userType">User Type</span></dt>
+          <dd>
+            <span jhiTranslate="{{ 'govGuardianApp.UserType.' + appUser.userType }}">{{ appUser.userType }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.user">User</span></dt>
+          <dd>
+            <span>{{ appUser.user?.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.reviews">Reviews</span></dt>
+          <dd>
+            @if (appUser.reviews) {
+              <div>
+                <a [routerLink]="['/review', appUser.reviews.id, 'view']">{{ appUser.reviews.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.rewards">Rewards</span></dt>
+          <dd>
+            @if (appUser.rewards) {
+              <div>
+                <a [routerLink]="['/reward', appUser.rewards.id, 'view']">{{ appUser.rewards.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="govGuardianApp.appUser.govOfficialContent">Gov Official Content</span></dt>
+          <dd>
+            @if (appUser.govOfficialContent) {
+              <div>
+                <a [routerLink]="['/gov-official-content', appUser.govOfficialContent.id, 'view']">{{ appUser.govOfficialContent.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/app-user', appUser.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

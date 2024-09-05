@@ -1,0 +1,28 @@
+{
+  "govGuardianApp": {
+    "govOfficialContent": {
+      "home": {
+        "title": "Gov Official Contents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Gov Official Content",
+        "createOrEditLabel": "Create or edit a Gov Official Content",
+        "notFound": "No Gov Official Contents found"
+      },
+      "created": "A new Gov Official Content is created with identifier {{ param }}",
+      "updated": "A Gov Official Content is updated with identifier {{ param }}",
+      "deleted": "A Gov Official Content is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Gov Official Content {{ id }}?"
+      },
+      "detail": {
+        "title": "Gov Official Content"
+      },
+      "id": "ID",
+      "law": "Law",
+      "description": "Description",
+      "action": "Action",
+      "date": "Date",
+      "appUser": "App User"
+    }
+  }
+}

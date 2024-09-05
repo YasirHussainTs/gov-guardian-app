@@ -1,0 +1,28 @@
+{
+  "govGuardianApp": {
+    "reportHeader": {
+      "home": {
+        "title": "Report Headers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Report Header",
+        "createOrEditLabel": "Create or edit a Report Header",
+        "notFound": "No Report Headers found"
+      },
+      "created": "A new Report Header is created with identifier {{ param }}",
+      "updated": "A Report Header is updated with identifier {{ param }}",
+      "deleted": "A Report Header is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Report Header {{ id }}?"
+      },
+      "detail": {
+        "title": "Report Header"
+      },
+      "id": "Id",
+      "description": "Description",
+      "title": "Title",
+      "timestamp": "Timestamp",
+      "status": "Status",
+      "appUser": "App User"
+    }
+  }
+}
